@@ -1,0 +1,35 @@
+package sample.test
+
+import jakarta.inject.Inject
+import junit.jupiter.api.Test
+import junit.jupiter.api.assertionsAssertEquals
+import micronaut.inject.context.annotation.Prototype
+import micronaut.test.core.annotation.MockBean
+import micronaut.test.junit5.extensions.junit5.annotation.MicronautTest
+
+interface Discount {
+  Integer amount(Integer subtotal)
+}
+
+@Prototype()
+class StandardDiscount implements Discount {
+  Integer amount(Integer subtotal) { 0 }
+}
+
+class SeasonalDiscount implements Discount {
+  Integer amount(Integer subtotal) { subtotal / 10 }
+}
+
+@MicronautTest(startApplication: false, transactional: false)
+class DiscountTest {
+  @Inject() Discount? discount
+
+  @MockBean(value: Discount.class)
+  Discount replacement() { SeasonalDiscount() }
+
+  @Test()
+  Void replacesApplicationBean() {
+    Discount service = discount!!
+    assertionsAssertEquals(arg0: 12, arg1: service.amount(120))
+  }
+}
