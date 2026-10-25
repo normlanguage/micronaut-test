@@ -4,7 +4,7 @@ Module module() {
     version: 1,
     exports: [],
     dependencies: [
-      dependency(repository: "github", name: "micronaut.test", version: 3),
+      dependency(repository: "github", name: "micronaut.test", version: 4),
       dependency(repository: "github", name: "micronaut.inject", version: 4),
       dependency(repository: "github", name: "micronaut.inject.processor", version: 4),
       dependency(repository: "github", name: "jakarta.inject", version: 4)
